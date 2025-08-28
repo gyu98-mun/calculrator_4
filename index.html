@@ -51,18 +51,24 @@
             }
             
             function percent() {
-                    let expr = document.forms.output.value;
-                    let operators = ["/", "-", "+", "*"]; 
+                let expr = document.forms.output.value;
+                let operators = ["/", "-", "+", "*"];
 
-                if (document.forms.output.value.slice(-1) != "%"){
-                    if (operators.some(operator => expr.includes(operator))){
-                        let value = math.evaluate(expr)
-                        document.forms.output.value = (value * 100) + "%";
-                    }else{
-                        document.forms.output.value = (parseFloat(expr) * 100) +"%";
-                    }
+                if (expr.slice(-1) != "%") {
+                    let value;
+
+                    if (operators.some(op => expr.includes(op))) {
+                    value = math.evaluate(expr);
+                    } else {
+                    value = parseFloat(expr);
                 }
+
+                let result = (value * 100).toFixed(6);       
+                result = result.replace(/\.?0+$/, "");       
+                document.forms.output.value = result + "%";
             }
+        }
+
 
         </script>
     </body>
